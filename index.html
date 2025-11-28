@@ -6,6 +6,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: "Lenia";
+            src: url('fonts/LeniaMonoDemoRegular-V45G0.ttf') format('truetype');
+        }
+
+        html {
+            font-size: 10px;
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+            font-family: "Lenia";
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+            font-size: 1.6rem;
+            flex-direction: column;
+        }
+
+        .calculator {
+            max-width: 60rem;
+            background-color: #000000;
+            padding: 2rem;
+            border-radius: 2rem;
+        }
+
+        .display__input {
+            outline: none;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 1.5rem;
+            background-color: #343434;
+            pointer-events: none;
+            font-size: 2.8rem;
+            color: #fff;
+        }
+
+        .display__input::placeholder {
+            color: #fff;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .btn {
+            cursor: pointer;
+            width: 7.5rem;
+            height: 7.5rem;
+            border-radius: 2rem;
+            border: none;
+            font-size: 3rem;
+            transition: 150ms;
+            background-color: rgba(71, 71, 71, 0.539);
+            color: #fff;
+        }
+
+        .btn:active {
+            background-color: rgba(123, 123, 123, 0.429);
+            transform: scale(0.94);
+        }
+
+        .operator {
+            color: rgb(221, 125, 0);
+        }
+
+        .equal {
+            background-color: rgb(236, 134, 0);
+            ;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,7 +121,43 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+
+        // Elements
+        const displayInput = document.querySelector(".display__input");
+        const numberBtns = document.querySelectorAll(".btn-val");
+        const clearDisplayBtn = document.querySelector("#clear-display");
+        const clearCharBtn = document.querySelector("#clear-char");
+        const equalBtn = document.querySelector("#equal-btn");
+
+        // add Event handler to Number and Operator buttons
+        for (let i = 0; i < numberBtns.length; i++) {
+            const btn = numberBtns[i];
+            btn.addEventListener("click", function () {
+                displayInput.value += btn.value;
+            });
+        }
+
+        // add Event handler to Clear Display button
+        clearDisplayBtn.addEventListener("click", function () {
+            displayInput.value = "";
+        });
+
+        // add Event handler to Clear Characters button
+        clearCharBtn.addEventListener("click", function () {
+            displayInput.value = displayInput.value.slice(0, -1);
+        });
+
+        // add Event handler to Equal button
+        equalBtn.addEventListener("click", function () {
+            try {
+                displayInput.value = eval(displayInput.value);
+            } catch (error) {
+                displayInput.value = "Error";
+            }
+        });
+
+    </script>
 </body>
 
 </html>
